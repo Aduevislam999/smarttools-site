@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartTools — Полезные онлайн инструменты</title>
+<title>SmartTools — онлайн генератор паролей, никнеймов, таймер и конвертер</title>
+<meta name="description" content="SmartTools — полезные онлайн инструменты: генератор паролей, генератор никнеймов, калькулятор процентов, таймер, конвертер валют.">
+<meta name="keywords" content="генератор паролей, генератор никнеймов, калькулятор процентов, таймер, конвертер валют, онлайн инструменты, SmartTools">
 <style>
 body{
     margin:0;
-    font-family:Arial;
+    font-family:Arial, sans-serif;
     background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
     color:white;
     text-align:center;
@@ -29,6 +31,11 @@ header{
     margin:15px;
     padding:20px;
     border-radius:12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 button{
     background:#2c5364;
@@ -38,11 +45,17 @@ button{
     border-radius:6px;
     cursor:pointer;
     margin-top:10px;
+    transition: background 0.3s;
+}
+button:hover{
+    background:#1b3a50;
 }
 input{
     padding:8px;
     width:80%;
     margin:5px;
+    border-radius:6px;
+    border:1px solid #ccc;
 }
 .result{
     margin-top:10px;
@@ -59,6 +72,12 @@ footer{
     margin:20px;
     padding:20px;
     border-radius:10px;
+}
+
+/* Таймер стиль */
+.timer-input{
+    width:60px;
+    text-align:center;
 }
 </style>
 </head>
@@ -104,6 +123,33 @@ footer{
 <div class="result" id="percResult"></div>
 </div>
 
+<!-- TIMER -->
+<div class="card">
+<h3>⏱ Онлайн таймер (секунды)</h3>
+<input type="number" id="timerInput" class="timer-input" placeholder="10">
+<br>
+<button onclick="startTimer()">Старт</button>
+<div class="result" id="timerResult"></div>
+</div>
+
+<!-- CURRENCY CONVERTER -->
+<div class="card">
+<h3>💱 Конвертер валют (USD → RUB)</h3>
+<input type="number" id="usd" placeholder="Сумма в USD">
+<br>
+<button onclick="convertCurrency()">Конвертировать</button>
+<div class="result" id="currencyResult"></div>
+</div>
+
+<!-- PASSWORD STRENGTH -->
+<div class="card">
+<h3>🔒 Проверка силы пароля</h3>
+<input type="text" id="checkPass" placeholder="Введите пароль">
+<br>
+<button onclick="checkStrength()">Проверить</button>
+<div class="result" id="strengthResult"></div>
+</div>
+
 </div>
 
 <div class="ad">Здесь будет реклама</div>
@@ -111,6 +157,7 @@ footer{
 <footer>© 2026 SmartTools</footer>
 
 <script>
+// Генератор паролей
 function genPass(){
     let chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
     let pass="";
@@ -120,13 +167,14 @@ function genPass(){
     document.getElementById("pass").innerText=pass;
 }
 
+// Генератор никнеймов
 function genNick(){
-    let first=["Shadow","Dark","Pro","Mega","Ultra","Ghost","Fire","Cyber"];
-    let second=["Player","Gamer","Ninja","Hero","Warrior","Legend","Hunter"];
+    let first=["Shadow","Dark","Pro","Mega","Ultra","Ghost","Fire","Cyber"];let second=["Player","Gamer","Ninja","Hero","Warrior","Legend","Hunter"];
     let nick=first[Math.floor(Math.random()*first.length)] + second[Math.floor(Math.random()*second.length)] + Math.floor(Math.random()*100);
     document.getElementById("nick").innerText=nick;
 }
 
+// Случайное число
 function randNum(){
     let min=Number(document.getElementById("min").value);
     let max=Number(document.getElementById("max").value);
@@ -134,11 +182,41 @@ function randNum(){
     document.getElementById("num").innerText=num;
 }
 
+// Калькулятор процентов
 function calcPercent(){
     let total=Number(document.getElementById("total").value);
     let percent=Number(document.getElementById("percent").value);
     let res=total*(percent/100);
     document.getElementById("percResult").innerText=res;
+}
+
+// Таймер
+let timerInterval;
+function startTimer(){
+    clearInterval(timerInterval);
+    let sec = Number(document.getElementById("timerInput").value);
+    document.getElementById("timerResult").innerText = sec;
+    timerInterval = setInterval(() => {
+        sec--;
+        document.getElementById("timerResult").innerText = sec;
+        if(sec <= 0) clearInterval(timerInterval);
+    }, 1000);
+}
+
+// Конвертер валют USD → RUB
+function convertCurrency(){
+    let usd = Number(document.getElementById("usd").value);
+    let rate = 93; // примерный курс
+    document.getElementById("currencyResult").innerText = usd + " USD = " + (usd*rate).toFixed(2) + " RUB";
+}
+
+// Проверка силы пароля
+function checkStrength(){
+    let pass = document.getElementById("checkPass").value;
+    let strength = "Слабый";
+    if(pass.length>=12 && /[A-Z]/.test(pass) && /[0-9]/.test(pass) && /[\W]/.test(pass)) strength="Очень сильный";
+    else if(pass.length>=8 && /[A-Z]/.test(pass) && /[0-9]/.test(pass)) strength="Средний";
+    document.getElementById("strengthResult").innerText = strength;
 }
 </script>
 
