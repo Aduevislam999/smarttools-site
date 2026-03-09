@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartTools — Полезные онлайн инструменты</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+}
+header{
+    padding:30px;
+    font-size:28px;
+    font-weight:bold;
+}
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.card{
+    background:white;
+    color:#333;
+    width:280px;
+    margin:15px;
+    padding:20px;
+    border-radius:12px;
+}
+button{
+    background:#2c5364;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+}
+input{
+    padding:8px;
+    width:80%;
+    margin:5px;
+}
+.result{
+    margin-top:10px;
+    font-weight:bold;
+    color:#0f2027;
+}
+footer{
+    margin-top:30px;
+    padding:15px;
+    opacity:0.7;
+}
+.ad{
+    background:#ffffff22;
+    margin:20px;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<header>🚀 SmartTools — Полезные онлайн инструменты</header>
+
+<div class="ad">Здесь будет реклама</div>
+
+<div class="container">
+
+<!-- PASSWORD -->
+<div class="card">
+<h3>🔐 Генератор паролей</h3>
+<button onclick="genPass()">Сгенерировать</button>
+<div class="result" id="pass"></div>
+</div>
+
+<!-- NICKNAME -->
+<div class="card">
+<h3>🎮 Генератор никнеймов</h3>
+<button onclick="genNick()">Создать ник</button>
+<div class="result" id="nick"></div>
+</div>
+
+<!-- RANDOM NUMBER -->
+<div class="card">
+<h3>🎲 Случайное число</h3>
+<input type="number" id="min" placeholder="От">
+<input type="number" id="max" placeholder="До">
+<br>
+<button onclick="randNum()">Сгенерировать</button>
+<div class="result" id="num"></div>
+</div>
+
+<!-- PERCENT -->
+<div class="card">
+<h3>🧮 Калькулятор процентов</h3>
+<input type="number" id="total" placeholder="Число">
+<input type="number" id="percent" placeholder="%">
+<br>
+<button onclick="calcPercent()">Посчитать</button>
+<div class="result" id="percResult"></div>
+</div>
+
+</div>
+
+<div class="ad">Здесь будет реклама</div>
+
+<footer>© 2026 SmartTools</footer>
+
+<script>
+function genPass(){
+    let chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    let pass="";
+    for(let i=0;i<12;i++){
+        pass+=chars[Math.floor(Math.random()*chars.length)];
+    }
+    document.getElementById("pass").innerText=pass;
+}
+
+function genNick(){
+    let first=["Shadow","Dark","Pro","Mega","Ultra","Ghost","Fire","Cyber"];
+    let second=["Player","Gamer","Ninja","Hero","Warrior","Legend","Hunter"];
+    let nick=first[Math.floor(Math.random()*first.length)] + second[Math.floor(Math.random()*second.length)] + Math.floor(Math.random()*100);
+    document.getElementById("nick").innerText=nick;
+}
+
+function randNum(){
+    let min=Number(document.getElementById("min").value);
+    let max=Number(document.getElementById("max").value);
+    let num=Math.floor(Math.random()*(max-min+1))+min;
+    document.getElementById("num").innerText=num;
+}
+
+function calcPercent(){
+    let total=Number(document.getElementById("total").value);
+    let percent=Number(document.getElementById("percent").value);
+    let res=total*(percent/100);
+    document.getElementById("percResult").innerText=res;
+}
+</script>
+
+</body>
+</html>
